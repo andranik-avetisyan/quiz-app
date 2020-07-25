@@ -11,6 +11,7 @@ export const CreateQuiz = () => {
     axios
       .post('http://localhost:5000/quizzes/', { quiz, status })
       .then((response) => {
+        console.log(response.data.status)
       })
       .catch((error) => {
         throw error;
