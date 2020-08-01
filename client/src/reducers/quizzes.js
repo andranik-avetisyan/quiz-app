@@ -1,6 +1,6 @@
 import { LOAD_ALL_QUIZZES, DELETE_QUIZ } from '../actions/actionTypes';
 
-export const reduxThunkReducer = (state = {}, action) => {
+export const quizzesReducer = (state = {}, action) => {
   switch (action.type) {
     case LOAD_ALL_QUIZZES: {
       return {
@@ -19,4 +19,4 @@ export const reduxThunkReducer = (state = {}, action) => {
   }
 };
 
-export default reduxThunkReducer;
+export default quizzesReducer;

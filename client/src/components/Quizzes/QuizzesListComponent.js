@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadQuizzes, deleteQuiz } from '../actions/quizzesActions';
+import { loadQuizzes, deleteQuiz } from '../../actions/quizzesActions';
 
 export const QuizzesList = () => {
   const dispatch = useDispatch();
