@@ -6,8 +6,8 @@ const User = require('../database/models/user');
 exports.register = (req, res) => {
   const today = new Date();
   const userData = {
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
+    first_name: req.body.firstName,
+    last_name: req.body.lastName,
     email: req.body.email,
     password: req.body.password,
     created: today,
@@ -24,7 +24,10 @@ exports.register = (req, res) => {
           userData.password = hash;
           User.create(userData)
             .then((user) => {
-              res.json({ status: user.email + 'Registered!' });
+              let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
+                expiresIn: 1440,
+              });
+              res.json({ status: user.email + '  Registered!', accessToken: token });
             })
             .catch((err) => {
               res.send('error: ' + err);

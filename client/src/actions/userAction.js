@@ -21,6 +21,25 @@ export const login = (email, password) => {
 
 }
 
+export const register = ({ firstName, lastName, email, password }) => {
+  return (dispatch) =>
+    axios.post(API_URL + 'register', {
+      firstName,
+      lastName,
+      email,
+      password,
+    })
+      .then((response) => {
+        if (response.data.accessToken) {
+          localStorage.setItem('user', JSON.stringify(response.data));
+          dispatch({ type: LOGIN, payload: JSON.stringify(response.data) });
+        }
+      })
+      .catch((error) => {
+        throw error;
+      });
+}
+
 export const logout = () => {
   return (dispatch) => {
     localStorage.removeItem('user');

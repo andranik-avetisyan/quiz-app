@@ -7,6 +7,7 @@ import QuizzesList from './components/Quizzes/QuizzesListComponent';
 import EditQuiz from './components/Quizzes/EditQuizComponent';
 import CreateQuiz from './components/Quizzes/CreateQuizComponent';
 import Login from './components/Login/LogIn';
+import Register from './components/Register/Register';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/edit/:id" component={EditQuiz} />
         <Route path="/create" component={CreateQuiz} />
         <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
       </div>
     </Router>
   );
