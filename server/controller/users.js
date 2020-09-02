@@ -55,6 +55,8 @@ exports.login = (req, res) => {
             expiresIn: 1440,
           });
           res.send({ accessToken: token });
+        } else{
+          res.status(400).json({ error: 'Invalid password' });
         }
       } else {
         res.status(400).json({ error: 'User does not exist' });

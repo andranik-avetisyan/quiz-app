@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { LOAD_ALL_QUIZZES, DELETE_QUIZ } from './actionTypes';
+import { toast } from 'react-toastify';
 
 export const loadQuizzes = () => {
   return (dispatch) =>
@@ -20,6 +21,7 @@ export const deleteQuiz = (id, cb) => {
       .then((response) => {
         dispatch({ type: DELETE_QUIZ, payload: response.data });
         dispatch(cb());
+        toast.info("Deleted !");
       })
       .catch((error) => {
         throw error;

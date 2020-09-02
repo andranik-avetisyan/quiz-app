@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { LOGIN, LOGOUT } from './actionTypes';
 import { API_URL } from '../constants/url'
+import { toast } from 'react-toastify';
 
 export const login = (email, password) => {
   return (dispatch) =>
@@ -13,9 +14,11 @@ export const login = (email, password) => {
         if (response.data.accessToken) {
           localStorage.setItem('user', JSON.stringify(response.data));
           dispatch({ type: LOGIN, payload: JSON.stringify(response.data) });
+          toast.success("You are logged in!");
         }
       })
       .catch((error) => {
+        toast.error('Error!');
         throw error;
       });
 
@@ -33,6 +36,10 @@ export const register = ({ firstName, lastName, email, password }) => {
         if (response.data.accessToken) {
           localStorage.setItem('user', JSON.stringify(response.data));
           dispatch({ type: LOGIN, payload: JSON.stringify(response.data) });
+          toast.success("Registered successfully!");
+        }
+        else {
+          toast.error(response.data.error);
         }
       })
       .catch((error) => {
