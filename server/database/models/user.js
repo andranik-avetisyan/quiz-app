@@ -24,6 +24,10 @@ module.exports = db.sequelize.define(
     created: {
       type: Sequelize.DATE,
       defaultValue: Sequelize.NOW
+    },
+    is_admin: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: 0
     }
   },
   {

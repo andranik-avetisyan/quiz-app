@@ -25,9 +25,9 @@ export const NavbarComponent = () => {
               <Link to="/" className="nav-link">
                 Quizzes
               </Link>
-              <Link to="/create" className="nav-link">
+              {user.isAdmin && <Link to="/create" className="nav-link">
                 Create Quiz
-              </Link>
+              </Link>}
               <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

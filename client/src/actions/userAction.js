@@ -13,7 +13,7 @@ export const login = (email, password) => {
       .then((response) => {
         if (response.data.accessToken) {
           localStorage.setItem('user', JSON.stringify(response.data));
-          dispatch({ type: LOGIN, payload: JSON.stringify(response.data) });
+          dispatch({ type: LOGIN, payload: response.data });
           toast.success("You are logged in!");
         }
       })
@@ -24,18 +24,20 @@ export const login = (email, password) => {
 
 }
 
-export const register = ({ firstName, lastName, email, password }) => {
+export const register = ({ firstName, lastName, email, password, isAdmin, accessKey }) => {
   return (dispatch) =>
     axios.post(API_URL + 'register', {
       firstName,
       lastName,
       email,
       password,
+      isAdmin,
+      accessKey
     })
       .then((response) => {
         if (response.data.accessToken) {
           localStorage.setItem('user', JSON.stringify(response.data));
-          dispatch({ type: LOGIN, payload: JSON.stringify(response.data) });
+          dispatch({ type: LOGIN, payload: response.data });
           toast.success("Registered successfully!");
         }
         else {
@@ -43,6 +45,7 @@ export const register = ({ firstName, lastName, email, password }) => {
         }
       })
       .catch((error) => {
+        toast.error('Something went wrong try again later');
         throw error;
       });
 }

@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
-import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import { Button, FormGroup, FormControl, FormLabel, FormCheck } from 'react-bootstrap';
 import './Register.css';
 import { useDispatch } from 'react-redux';
 import { register } from '../../actions/userAction'
 
 export const Register = ({ history }) => {
+
   const dispatch = useDispatch();
 
   const [userData, setUserData] = useState({});
-  const { firstName = '', lastName = '', email = '', password = '' } = userData
+  const { firstName = '', lastName = '', email = '', password = '', isAdmin, accessKey } = userData
 
-  function validateForm() {
+  const validateForm = () => {
     return email.length > 0 && password.length > 0;
   }
 
-  function handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(register(userData))
       .then(() => {
@@ -60,6 +61,18 @@ export const Register = ({ history }) => {
             type="password"
           />
         </FormGroup>
+        <FormGroup id="isAdmin">
+          <FormCheck type="checkbox" label="Register as admin" onChange={(e) => setUserData({ ...userData, ...{ isAdmin: e.target.checked } })} />
+        </FormGroup>
+        {isAdmin && <FormGroup controlId="access key" size="lg">
+          <FormLabel>Enter access key</FormLabel>
+          <FormControl
+            autoFocus
+            type="password"
+            value={accessKey}
+            onChange={(e) => setUserData({ ...userData, ...{ accessKey: e.target.value } })}
+          />
+        </FormGroup>}
         <Button block size="lg" disabled={!validateForm()} type="submit" variant="dark">
           Register
         </Button>

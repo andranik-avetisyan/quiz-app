@@ -11,6 +11,7 @@ exports.register = (req, res) => {
     email: req.body.email,
     password: req.body.password,
     created: today,
+    is_admin: req.body.isAdmin,
   };
 
   User.findOne({
@@ -20,6 +21,9 @@ exports.register = (req, res) => {
   })
     .then((user) => {
       if (!user) {
+        if (req.body.isAdmin && req.body.accessKey !== process.env.ACCESS_KEY) {
+          res.json({ error: 'Permission denied!' });
+        }
         bcrypt.hash(req.body.password, 10, (err, hash) => {
           userData.password = hash;
           User.create(userData)
@@ -27,10 +31,10 @@ exports.register = (req, res) => {
               let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
                 expiresIn: 1440,
               });
-              res.json({ status: user.email + '  Registered!', accessToken: token });
+              res.json({ status: user.email + '  Registered!', accessToken: token, isAdmin: user.is_admin });
             })
             .catch((err) => {
-              res.send('error: ' + err);
+              res.json('error: ' + err);
             });
         });
       } else {
@@ -38,7 +42,7 @@ exports.register = (req, res) => {
       }
     })
     .catch((err) => {
-      res.send('error: ' + err);
+      res.json('error: ' + err);
     });
 };
 
@@ -54,8 +58,8 @@ exports.login = (req, res) => {
           let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
             expiresIn: 1440,
           });
-          res.send({ accessToken: token });
-        } else{
+          res.send({ accessToken: token, isAdmin: user.is_admin });
+        } else {
           res.status(400).json({ error: 'Invalid password' });
         }
       } else {
