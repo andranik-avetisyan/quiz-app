@@ -22,7 +22,7 @@ export const NavbarComponent = () => {
         {user ? (
           <>
             <Nav className="mr-auto">
-              <Link to="/" className="nav-link">
+              <Link to="/quizzes" className="nav-link">
                 Quizzes
               </Link>
               {user.isAdmin && <Link to="/create" className="nav-link">
